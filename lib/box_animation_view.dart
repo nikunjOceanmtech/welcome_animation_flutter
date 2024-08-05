@@ -72,7 +72,11 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
 
   Widget bottomPartView() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: (widget.introAnimationArgs.hintAlign == HintTextAndLineAlign.end)
+          ? CrossAxisAlignment.end
+          : (widget.introAnimationArgs.hintAlign == HintTextAndLineAlign.start)
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.center,
       children: [
         !widget.introAnimationArgs.isTopText
             ? Transform.rotate(

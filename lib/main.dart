@@ -89,17 +89,36 @@ class HomePageState extends State<HomePage> {
             child: Container(
               key: animationPostionKey2,
               color: Colors.transparent,
-              width: 200.h,
+              width: ScreenUtil().screenWidth,
               height: 200.h,
               padding: EdgeInsets.symmetric(horizontal: 10),
               alignment: Alignment.center,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.network(
-                  "https://oceanmtech.b-cdn.net/dmt/data_file/20240619173057-bzwax9.jpg",
-                  height: 180.h,
-                ),
-              ),
+              child: 1 == 1
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                          10,
+                          (index) => Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.network(
+                                "https://oceanmtech.b-cdn.net/dmt/data_file/20240619173057-bzwax9.jpg",
+                                height: 180.h,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.network(
+                        "https://oceanmtech.b-cdn.net/dmt/data_file/20240619173057-bzwax9.jpg",
+                        height: 180.h,
+                      ),
+                    ),
             ),
           ),
           AnimationView(
@@ -119,7 +138,7 @@ class HomePageState extends State<HomePage> {
                   text: hintText1,
                   boxSize: Size(100.h, 200.h),
                   lineAlign: HintTextAndLineAlign.start,
-                  hintAlign: HintTextAndLineAlign.end,
+                  hintAlign: HintTextAndLineAlign.center,
                   isTopText: false,
                 ),
               ),
@@ -133,12 +152,12 @@ class HomePageState extends State<HomePage> {
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
-                  xPos: (object2?.localToGlobal(Offset.zero).dx ?? 0),
+                  xPos: (object2?.localToGlobal(Offset.zero).dx ?? 0) + 10,
                   yPos: (object2?.localToGlobal(Offset.zero).dy ?? 0) - (hintText1.length < 40 ? 95 : 115),
                   text: hintText1,
                   boxSize: Size(100.h, 200.h),
-                  lineAlign: HintTextAndLineAlign.start,
-                  hintAlign: HintTextAndLineAlign.end,
+                  lineAlign: HintTextAndLineAlign.center,
+                  hintAlign: HintTextAndLineAlign.center,
                   isTopText: true,
                 ),
               ),
