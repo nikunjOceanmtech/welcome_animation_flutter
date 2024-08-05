@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:welcome_animation_flutter/highlighted_box_cliper.dart';
 import 'package:welcome_animation_flutter/intro_animation_args.dart';
 import 'package:welcome_animation_flutter/painter.dart';
 import 'package:welcome_animation_flutter/text_animation_view.dart';
@@ -49,6 +50,7 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
     return Stack(
       fit: StackFit.expand,
       children: [
+        getClipPathOverlay(),
         Positioned(
           left: widget.introAnimationArgs.xPos,
           top: widget.introAnimationArgs.yPos,
@@ -78,6 +80,7 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
               ? CrossAxisAlignment.start
               : CrossAxisAlignment.center,
       children: [
+        !widget.introAnimationArgs.isTopText ? SizedBox(height: 5) : const SizedBox.shrink(),
         !widget.introAnimationArgs.isTopText
             ? Transform.rotate(
                 angle: pi / 1,
@@ -106,6 +109,7 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
               ? TextAnimationView(style: widget.introAnimationArgs.style, text: widget.introAnimationArgs.text)
               : const SizedBox.shrink(),
         ),
+        widget.introAnimationArgs.isTopText ? SizedBox(height: 5) : const SizedBox.shrink(),
         widget.introAnimationArgs.isTopText ? SizedBox(height: 15) : const SizedBox.shrink(),
         widget.introAnimationArgs.isTopText
             ? lineView(borderColor: widget.introAnimationArgs.borderColor)
@@ -176,6 +180,13 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
           ],
         ),
       ),
+    );
+  }
+
+  Widget getClipPathOverlay() {
+    return ClipPath(
+      clipper: HighlightedBoxClipper(introAnimationArgs: widget.introAnimationArgs),
+      child: Container(color: Colors.black.withOpacity(0.7)),
     );
   }
 }

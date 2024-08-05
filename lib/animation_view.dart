@@ -21,7 +21,6 @@ class AnimationView extends StatelessWidget {
         return Container(
           height: double.infinity,
           width: double.infinity,
-          color: Colors.black.withOpacity(0.7),
           child: Stack(
             clipBehavior: Clip.none,
             children: [
