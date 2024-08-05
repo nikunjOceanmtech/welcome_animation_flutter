@@ -53,7 +53,11 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
           left: widget.introAnimationArgs.xPos,
           top: widget.introAnimationArgs.yPos,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: (widget.introAnimationArgs.hintAlign == HintTextAndLineAlign.end)
+                ? CrossAxisAlignment.end
+                : (widget.introAnimationArgs.hintAlign == HintTextAndLineAlign.start)
+                    ? CrossAxisAlignment.start
+                    : CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               topPartView(),
@@ -62,16 +66,13 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
             ],
           ),
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: buttonView(),
-        ),
       ],
     );
   }
 
   Widget bottomPartView() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         !widget.introAnimationArgs.isTopText
             ? Transform.rotate(
@@ -88,60 +89,19 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
     );
   }
 
-  Widget buttonView() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          widget.introAnimationArgs.skipButton ??
-              InkWell(
-                onTap: widget.introAnimationArgs.onTapForBarier,
-                child: Container(
-                  height: 30,
-                  width: 80,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: widget.introAnimationArgs.skipButtonColor ?? Colors.black,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Text(
-                    "Skip",
-                    style: widget.introAnimationArgs.skipButtonStyle ??
-                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-          SizedBox(width: 20),
-          widget.introAnimationArgs.nextButton ??
-              InkWell(
-                onTap: widget.introAnimationArgs.onTapForBox,
-                child: Container(
-                  height: 30,
-                  width: 80,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: widget.introAnimationArgs.skipButtonColor ?? Colors.black,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Text(
-                    "Next",
-                    style: widget.introAnimationArgs.nextButtonStyle ??
-                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-        ],
-      ),
-    );
-  }
-
   Widget topPartView() {
     return Column(
+      crossAxisAlignment: (widget.introAnimationArgs.lineAlign == HintTextAndLineAlign.end)
+          ? CrossAxisAlignment.end
+          : (widget.introAnimationArgs.lineAlign == HintTextAndLineAlign.start)
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.center,
       children: [
-        widget.introAnimationArgs.isTopText
-            ? TextAnimationView(style: widget.introAnimationArgs.style, text: widget.introAnimationArgs.text)
-            : const SizedBox.shrink(),
+        Container(
+          child: widget.introAnimationArgs.isTopText
+              ? TextAnimationView(style: widget.introAnimationArgs.style, text: widget.introAnimationArgs.text)
+              : const SizedBox.shrink(),
+        ),
         widget.introAnimationArgs.isTopText ? SizedBox(height: 15) : const SizedBox.shrink(),
         widget.introAnimationArgs.isTopText
             ? lineView(borderColor: widget.introAnimationArgs.borderColor)
@@ -176,8 +136,8 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
         child: Row(
           children: [
             SizedBox(
-              width: 100,
-              height: 200,
+              width: widget.introAnimationArgs.boxSize.width,
+              height: widget.introAnimationArgs.boxSize.height,
               child: AnimatedBuilder(
                 animation: _borderAnimation,
                 builder: (context, child) {
@@ -193,8 +153,8 @@ class _BoxAnimationViewState extends State<BoxAnimationView> with SingleTickerPr
               ),
             ),
             SizedBox(
-              width: 100,
-              height: 200,
+              width: widget.introAnimationArgs.boxSize.width,
+              height: widget.introAnimationArgs.boxSize.height,
               child: AnimatedBuilder(
                 animation: _borderAnimation,
                 builder: (context, child) {

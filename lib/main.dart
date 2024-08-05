@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:welcome_animation_flutter/animation_view.dart';
+import 'package:welcome_animation_flutter/animation_view_cubit.dart';
 import 'package:welcome_animation_flutter/box_animation_view.dart';
 import 'package:welcome_animation_flutter/intro_animation_args.dart';
 
@@ -7,11 +10,19 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  DeviceType getDeviceType({required BuildContext context}) {
+    final data = MediaQueryData.fromView(View.of(context));
+    return data.size.shortestSide < 550 ? DeviceType.mobile : DeviceType.tablet;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Border Animation',
-      home: HomePage(),
+    return ScreenUtilInit(
+      designSize: getDeviceType(context: context) == DeviceType.tablet ? const Size(834, 1194) : const Size(414, 896),
+      child: MaterialApp(
+        title: 'Border Animation',
+        home: HomePage(),
+      ),
     );
   }
 }
@@ -26,8 +37,12 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   bool isAnimation1Show = false;
   bool isAnimation2Show = false;
-  GlobalKey animationPostionKey = GlobalKey();
-  RenderBox? object;
+  GlobalKey animationPostionKey1 = GlobalKey();
+  GlobalKey animationPostionKey2 = GlobalKey();
+  RenderBox? object1;
+  RenderBox? object2;
+
+  String hintText1 = "Click Here";
 
   Color allColor = Colors.white;
 
@@ -39,10 +54,13 @@ class HomePageState extends State<HomePage> {
         children: [
           Center(
             child: ElevatedButton(
-              onPressed: () => setState(() {
-                isAnimation1Show = !isAnimation1Show;
-                object = animationPostionKey.currentContext?.findRenderObject() as RenderBox;
-              }),
+              onPressed: () => setState(
+                () {
+                  animationViewCubit.updateScreenIndex(nextScreen: 0);
+                  object1 = animationPostionKey1.currentContext?.findRenderObject() as RenderBox;
+                  object2 = animationPostionKey2.currentContext?.findRenderObject() as RenderBox;
+                },
+              ),
               child: Text("Show Animation"),
             ),
           ),
@@ -50,97 +68,86 @@ class HomePageState extends State<HomePage> {
             top: 600 - 50,
             left: 110 - 50,
             child: Container(
-              key: animationPostionKey,
+              key: animationPostionKey1,
               color: Colors.transparent,
-              width: 200,
-              height: 200,
+              width: 200.h,
+              height: 200.h,
               padding: EdgeInsets.symmetric(horizontal: 10),
               alignment: Alignment.center,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image.network(
                   "https://oceanmtech.b-cdn.net/dmt/data_file/20240619173057-bzwax9.jpg",
-                  height: 180,
+                  height: 180.h,
                 ),
               ),
             ),
           ),
           Positioned(
-            top: 50,
+            top: 600 - 450,
             left: 110,
             child: Container(
-              // key: animationPostionKey,
+              key: animationPostionKey2,
               color: Colors.transparent,
-              width: 200,
-              height: 200,
+              width: 200.h,
+              height: 200.h,
               padding: EdgeInsets.symmetric(horizontal: 10),
               alignment: Alignment.center,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image.network(
                   "https://oceanmtech.b-cdn.net/dmt/data_file/20240619173057-bzwax9.jpg",
-                  height: 180,
+                  height: 180.h,
                 ),
               ),
             ),
           ),
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: (isAnimation1Show || isAnimation2Show) ? Colors.black.withOpacity(0.7) : null,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                isAnimation1Show
-                    ? BoxAnimationView(
-                        introAnimationArgs: IntroAnimationArgs(
-                          borderRadius: 15,
-                          borderColor: allColor,
-                          onTapForBarier: () => setState(() => isAnimation1Show = false),
-                          onTapForBox: () {
-                            isAnimation2Show = true;
-                            isAnimation1Show = false;
-                            setState(() {});
-                          },
-                          style: TextStyle(
-                            color: allColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          xPos: object?.localToGlobal(Offset.zero).dx ?? 0,
-                          yPos: (object?.localToGlobal(Offset.zero).dy ?? 0) - 112,
-                          // yPos: (object?.localToGlobal(Offset.zero).dy ?? 0) - 92,
-                          text: "Tap on NikunjNikunjNikunj\nNikunjNikunjNikunj",
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                isAnimation2Show
-                    ? BoxAnimationView(
-                        introAnimationArgs: IntroAnimationArgs(
-                          borderRadius: 15,
-                          borderColor: allColor,
-                          onTapForBarier: () => setState(() => isAnimation2Show = false),
-                          onTapForBox: () {
-                            isAnimation2Show = false;
-                            setState(() {});
-                          },
-                          style: TextStyle(
-                            color: allColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          xPos: 110,
-                          yPos: 50,
-                          text: "Tap on",
-                          isTopText: false,
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-              ],
-            ),
+          AnimationView(
+            listOfAnimationPart: [
+              BoxAnimationView(
+                key: Key(DateTime.now().microsecondsSinceEpoch.toString()),
+                introAnimationArgs: IntroAnimationArgs(
+                  borderRadius: 15,
+                  borderColor: allColor,
+                  style: TextStyle(
+                    color: allColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  xPos: (object1?.localToGlobal(Offset.zero).dx) ?? 0,
+                  yPos: (object1?.localToGlobal(Offset.zero).dy ?? 0),
+                  text: hintText1,
+                  boxSize: Size(100.h, 200.h),
+                  lineAlign: HintTextAndLineAlign.start,
+                  hintAlign: HintTextAndLineAlign.end,
+                  isTopText: false,
+                ),
+              ),
+              BoxAnimationView(
+                key: Key(DateTime.now().microsecondsSinceEpoch.toString()),
+                introAnimationArgs: IntroAnimationArgs(
+                  borderRadius: 15,
+                  borderColor: allColor,
+                  style: TextStyle(
+                    color: allColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  xPos: (object2?.localToGlobal(Offset.zero).dx ?? 0),
+                  yPos: (object2?.localToGlobal(Offset.zero).dy ?? 0) - (hintText1.length < 40 ? 95 : 115),
+                  text: hintText1,
+                  boxSize: Size(100.h, 200.h),
+                  lineAlign: HintTextAndLineAlign.start,
+                  hintAlign: HintTextAndLineAlign.end,
+                  isTopText: true,
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 }
+
+final AnimationViewCubit animationViewCubit = AnimationViewCubit();
