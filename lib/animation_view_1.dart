@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:welcome_animation_flutter/animation_view_cubit.dart';
-import 'package:welcome_animation_flutter/box_animation_view.dart';
+import 'package:welcome_animation_flutter/lottie_animation_with_circle.dart';
 import 'package:welcome_animation_flutter/main.dart';
 
-class AnimationView extends StatelessWidget {
-  final List<BoxAnimationView?> listOfAnimationPart;
-  const AnimationView({super.key, required this.listOfAnimationPart});
+class AnimationView1 extends StatelessWidget {
+  final List<LottieAnimationWithCircle?> listOfAnimationPart;
+  const AnimationView1({super.key, required this.listOfAnimationPart});
 
   final Color allColor = Colors.white;
 
