@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:welcome_animation_flutter/animation_view.dart';
 import 'package:welcome_animation_flutter/animation_view_cubit.dart';
 import 'package:welcome_animation_flutter/box_animation_view.dart';
+import 'package:welcome_animation_flutter/lottie_animation_with_circle.dart';
 import 'package:welcome_animation_flutter/intro_animation_args.dart';
 
 void main() => runApp(MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       designSize: getDeviceType(context: context) == DeviceType.tablet ? const Size(834, 1194) : const Size(414, 896),
       child: MaterialApp(
         title: 'Border Animation',
-        home: HomePage(),
+        home: 1 == 1 ? LottieAnimationWithCircle(isTopAnimation: true) : HomePage(),
       ),
     );
   }
