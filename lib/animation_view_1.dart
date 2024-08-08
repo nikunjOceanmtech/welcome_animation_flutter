@@ -25,10 +25,10 @@ class AnimationView1 extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               listOfAnimationPart[state]!,
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: buttonView(state: state),
-              ),
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: buttonView(state: state),
+              // ),
             ],
           ),
         );
