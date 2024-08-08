@@ -48,29 +48,23 @@ class _LottieAnimationWithCircleState extends State<LottieAnimationWithCircle> w
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      splashFactory: NoSplash.splashFactory,
-      onTap: widget.lottieAnimationParms.onTapForImage,
-      child: Center(
-        child: Stack(
-          children: [
-            getClipPathOverlay(),
-            widget.lottieAnimationParms.arrowPostion == ArrowPostion.leftTop
-                ? buildLeftTopView()
-                : const SizedBox.shrink(),
-            widget.lottieAnimationParms.arrowPostion == ArrowPostion.leftBottom
-                ? buildLeftBottomView()
-                : const SizedBox.shrink(),
-            widget.lottieAnimationParms.arrowPostion == ArrowPostion.rightTop
-                ? buildRightTopView()
-                : const SizedBox.shrink(),
-            widget.lottieAnimationParms.arrowPostion == ArrowPostion.rightBottom
-                ? buildRightBottomView()
-                : const SizedBox.shrink(),
-          ],
-        ),
+    return Center(
+      child: Stack(
+        children: [
+          getClipPathOverlay(),
+          widget.lottieAnimationParms.arrowPostion == ArrowPostion.leftTop
+              ? buildLeftTopView()
+              : const SizedBox.shrink(),
+          widget.lottieAnimationParms.arrowPostion == ArrowPostion.leftBottom
+              ? buildLeftBottomView()
+              : const SizedBox.shrink(),
+          widget.lottieAnimationParms.arrowPostion == ArrowPostion.rightTop
+              ? buildRightTopView()
+              : const SizedBox.shrink(),
+          widget.lottieAnimationParms.arrowPostion == ArrowPostion.rightBottom
+              ? buildRightBottomView()
+              : const SizedBox.shrink(),
+        ],
       ),
     );
   }
@@ -82,17 +76,23 @@ class _LottieAnimationWithCircleState extends State<LottieAnimationWithCircle> w
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: widget.lottieAnimationParms.animationCircleSize.height,
-            width: widget.lottieAnimationParms.animationCircleSize.width,
-            child: Transform.rotate(
-              angle: pi * 3,
-              child: CircularProgressIndicator(
-                key: globalKey,
-                value: _lineAnimation?.value,
-                strokeWidth: 3,
-                backgroundColor: Colors.transparent,
-                valueColor: AlwaysStoppedAnimation(Colors.white),
+          InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+            onTap: widget.lottieAnimationParms.onTapForImage,
+            child: SizedBox(
+              height: widget.lottieAnimationParms.animationCircleSize.height,
+              width: widget.lottieAnimationParms.animationCircleSize.width,
+              child: Transform.rotate(
+                angle: pi * 3,
+                child: CircularProgressIndicator(
+                  key: globalKey,
+                  value: _lineAnimation?.value,
+                  strokeWidth: 3,
+                  backgroundColor: Colors.transparent,
+                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                ),
               ),
             ),
           ),
@@ -133,15 +133,21 @@ class _LottieAnimationWithCircleState extends State<LottieAnimationWithCircle> w
             ),
           ],
         ),
-        SizedBox(
-          height: 80,
-          width: 80,
-          child: CircularProgressIndicator(
-            key: globalKey,
-            value: _lineAnimation?.value,
-            strokeWidth: 5,
-            backgroundColor: Colors.transparent,
-            valueColor: AlwaysStoppedAnimation(Colors.white),
+        InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          splashFactory: NoSplash.splashFactory,
+          onTap: widget.lottieAnimationParms.onTapForImage,
+          child: SizedBox(
+            height: 80,
+            width: 80,
+            child: CircularProgressIndicator(
+              key: globalKey,
+              value: _lineAnimation?.value,
+              strokeWidth: 5,
+              backgroundColor: Colors.transparent,
+              valueColor: AlwaysStoppedAnimation(Colors.white),
+            ),
           ),
         ),
       ],
@@ -152,17 +158,23 @@ class _LottieAnimationWithCircleState extends State<LottieAnimationWithCircle> w
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        SizedBox(
-          height: 80,
-          width: 80,
-          child: Transform.rotate(
-            angle: pi * 3,
-            child: CircularProgressIndicator(
-              key: globalKey,
-              value: _lineAnimation?.value,
-              strokeWidth: 5,
-              backgroundColor: Colors.transparent,
-              valueColor: AlwaysStoppedAnimation(Colors.white),
+        InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          splashFactory: NoSplash.splashFactory,
+          onTap: widget.lottieAnimationParms.onTapForImage,
+          child: SizedBox(
+            height: 80,
+            width: 80,
+            child: Transform.rotate(
+              angle: pi * 3,
+              child: CircularProgressIndicator(
+                key: globalKey,
+                value: _lineAnimation?.value,
+                strokeWidth: 5,
+                backgroundColor: Colors.transparent,
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              ),
             ),
           ),
         ),
@@ -203,15 +215,21 @@ class _LottieAnimationWithCircleState extends State<LottieAnimationWithCircle> w
             SizedBox(width: 30),
           ],
         ),
-        SizedBox(
-          height: 80,
-          width: 80,
-          child: CircularProgressIndicator(
-            key: globalKey,
-            value: _lineAnimation?.value,
-            strokeWidth: 5,
-            backgroundColor: Colors.transparent,
-            valueColor: AlwaysStoppedAnimation(Colors.white),
+        InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          splashFactory: NoSplash.splashFactory,
+          onTap: widget.lottieAnimationParms.onTapForImage,
+          child: SizedBox(
+            height: 80,
+            width: 80,
+            child: CircularProgressIndicator(
+              key: globalKey,
+              value: _lineAnimation?.value,
+              strokeWidth: 5,
+              backgroundColor: Colors.transparent,
+              valueColor: AlwaysStoppedAnimation(Colors.white),
+            ),
           ),
         ),
       ],
